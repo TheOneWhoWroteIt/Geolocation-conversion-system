@@ -20,4 +20,9 @@ public class GeoController {
   public String getPosition(@PathVariable String address) {
     return geoService.getPosition(address);
   }
+
+  @GetMapping("/address/{position}")
+  public String getAddress(@PathVariable String position) {
+    return geoService.getAddress(position);
+  }
 }
