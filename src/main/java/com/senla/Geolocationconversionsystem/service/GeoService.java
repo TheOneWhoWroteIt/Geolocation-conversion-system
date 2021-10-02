@@ -2,7 +2,9 @@ package com.senla.Geolocationconversionsystem.service;
 
 import com.senla.Geolocationconversionsystem.util.GeoUtil;
 import com.squareup.okhttp.Request;
+import org.springframework.stereotype.Component;
 
+@Component
 public class GeoService {
 
   private final String POSITION_PREF_URL = "https://geocode.search.hereapi.com/v1/geocode?q=";
