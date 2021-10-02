@@ -2,6 +2,7 @@ package com.senla.Geolocationconversionsystem.service;
 
 import com.senla.Geolocationconversionsystem.util.GeoUtil;
 import com.squareup.okhttp.Request;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,6 +13,7 @@ public class GeoService {
   private final String PART_URL_FOR_KEY = "&apiKey=";
   private final String KEY_API = "aMMQjymQ3US33cQeVSsix0hmHYUFT59z0yXRZWcpD2w";
 
+  @Cacheable(cacheNames = "position")
   public String getPosition(String address) {
 
     Request request =
@@ -23,6 +25,7 @@ public class GeoService {
     return GeoUtil.getItem(request).getPosition().toString();
   }
 
+  @Cacheable(cacheNames = "address")
   public String getAddress(String position) {
 
     Request request =
