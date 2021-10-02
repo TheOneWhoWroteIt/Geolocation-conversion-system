@@ -22,4 +22,15 @@ public class GeoService {
 
     return GeoUtil.getItem(request).getPosition().toString();
   }
+
+  public String getAddress(String position) {
+
+    Request request =
+        new Request.Builder()
+            .url(ADDRESS_PREF_URL + position + PART_URL_FOR_KEY + KEY_API)
+            .get()
+            .build();
+
+    return GeoUtil.getItem(request).getAddress().getLabel();
+  }
 }
