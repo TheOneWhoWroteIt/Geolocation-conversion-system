@@ -9,22 +9,21 @@ import com.squareup.okhttp.ResponseBody;
 
 public class GeoUtil {
 
-    public static Item getItem(Request request) {
+  public static Item getItem(Request request) {
 
-        ResultObject resultObject = null;
+    ResultObject resultObject = null;
 
-        OkHttpClient client = new OkHttpClient();
-        try {
-            ResponseBody responseBody = client.newCall(request).execute().body();
+    OkHttpClient client = new OkHttpClient();
+    try {
+      ResponseBody responseBody = client.newCall(request).execute().body();
 
-            ObjectMapper objectMapper = new ObjectMapper();
+      ObjectMapper objectMapper = new ObjectMapper();
 
-            resultObject = objectMapper.readValue(responseBody.string(), ResultObject.class);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        return resultObject.getItems().get(0);
+      resultObject = objectMapper.readValue(responseBody.string(), ResultObject.class);
+      return resultObject.getItems().get(0);
+    } catch (Exception ex) {
+      ex.printStackTrace();
+      throw new NullPointerException();
     }
-
+  }
 }
