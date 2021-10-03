@@ -11,18 +11,21 @@ public class GeoUtil {
 
   public static Item getItem(Request request) {
 
-    ResultObject resultObject = null;
-
-    OkHttpClient client = new OkHttpClient();
     try {
+      OkHttpClient client = new OkHttpClient();
+
       ResponseBody responseBody = client.newCall(request).execute().body();
 
       ObjectMapper objectMapper = new ObjectMapper();
 
-      resultObject = objectMapper.readValue(responseBody.string(), ResultObject.class);
+      ResultObject resultObject = objectMapper.readValue(responseBody.string(), ResultObject.class);
+
       return resultObject.getItems().get(0);
+
     } catch (Exception ex) {
+
       ex.printStackTrace();
+
       throw new NullPointerException();
     }
   }
