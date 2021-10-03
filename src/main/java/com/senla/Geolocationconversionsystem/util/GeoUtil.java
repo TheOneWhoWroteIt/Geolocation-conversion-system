@@ -9,7 +9,7 @@ import com.squareup.okhttp.ResponseBody;
 
 public class GeoUtil {
 
-  public static Item getItem(Request request) {
+  public ResultObject getResultObject(Request request) {
 
     try {
       OkHttpClient client = new OkHttpClient();
@@ -20,7 +20,7 @@ public class GeoUtil {
 
       ResultObject resultObject = objectMapper.readValue(responseBody.string(), ResultObject.class);
 
-      return resultObject.getItems().get(0);
+      return resultObject;
 
     } catch (Exception ex) {
 
