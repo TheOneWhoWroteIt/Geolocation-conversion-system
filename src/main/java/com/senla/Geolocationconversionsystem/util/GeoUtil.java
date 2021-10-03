@@ -6,7 +6,9 @@ import com.senla.Geolocationconversionsystem.entity.ResultObject;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.ResponseBody;
+import org.springframework.stereotype.Component;
 
+@Component
 public class GeoUtil {
 
   public ResultObject getResultObject(Request request) {
