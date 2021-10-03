@@ -2,8 +2,11 @@ package com.senla.Geolocationconversionsystem.service;
 
 import com.senla.Geolocationconversionsystem.util.GeoUtil;
 import com.squareup.okhttp.Request;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
+
+import java.util.NoSuchElementException;
 
 @Component
 public class GeoService {
@@ -12,6 +15,13 @@ public class GeoService {
   private final String ADDRESS_PREF_URL = "https://revgeocode.search.hereapi.com/v1/revgeocode?at=";
   private final String PART_URL_FOR_KEY = "&apiKey=";
   private final String KEY_API = "aMMQjymQ3US33cQeVSsix0hmHYUFT59z0yXRZWcpD2w";
+
+  private GeoUtil geoUtil;
+
+  @Autowired
+  public GeoService(GeoUtil geoUtil) {
+    this.geoUtil = geoUtil;
+  }
 
   @Cacheable(cacheNames = "position")
   public String getPosition(String address) {
@@ -23,8 +33,8 @@ public class GeoService {
             .build();
 
     try {
-      return GeoUtil.getItem(request).getPosition().toString();
-    } catch (NullPointerException ex) {
+      return geoUtil.getResultObject(request).getItems().stream().findAny().get().getPosition().toString();
+    } catch (NullPointerException | NoSuchElementException ex) {
       ex.printStackTrace();
       return "Неверные данные. Проверьте правильность введенного адреса.";
     }
@@ -40,8 +50,8 @@ public class GeoService {
             .build();
 
     try {
-      return GeoUtil.getItem(request).getAddress().getLabel();
-    } catch (NullPointerException ex) {
+      return geoUtil.getResultObject(request).getItems().stream().findAny().get().getAddress().getLabel();
+    } catch (NullPointerException | NoSuchElementException ex) {
       ex.printStackTrace();
       return "Неверные данные. Проверьте правильность введенных координат.";
     }
