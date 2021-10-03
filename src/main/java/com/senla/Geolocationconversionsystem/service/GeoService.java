@@ -22,7 +22,12 @@ public class GeoService {
             .get()
             .build();
 
-    return GeoUtil.getItem(request).getPosition().toString();
+    try {
+      return GeoUtil.getItem(request).getPosition().toString();
+    } catch (NullPointerException ex) {
+      ex.printStackTrace();
+      return "Неверные данные. Проверьте правильность введенного адреса.";
+    }
   }
 
   @Cacheable(cacheNames = "address")
@@ -34,6 +39,11 @@ public class GeoService {
             .get()
             .build();
 
-    return GeoUtil.getItem(request).getAddress().getLabel();
+    try {
+      return GeoUtil.getItem(request).getAddress().getLabel();
+    } catch (NullPointerException ex) {
+      ex.printStackTrace();
+      return "Неверные данные. Проверьте правильность введенных координат.";
+    }
   }
 }
