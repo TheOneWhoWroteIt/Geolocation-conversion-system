@@ -47,4 +47,12 @@ class GeoControllerTest {
             andExpect(status().isOk()).
             andExpect(content().string(containsString("Неверные данные. Проверьте правильность введенного адреса.")));
   }
+
+  @Test
+  void checkIncorrectDataForAddress() throws Exception{
+    this.mockMvc.perform(get("/address/999.3456,563.9987")).
+            andDo(print()).
+            andExpect(status().isOk()).
+            andExpect(content().string(containsString("Неверные данные. Проверьте правильность введенных координат.")));
+  }
 }
