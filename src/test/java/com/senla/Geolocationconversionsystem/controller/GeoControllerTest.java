@@ -33,5 +33,10 @@ class GeoControllerTest {
   }
 
   @Test
-  void getAddress() {}
+  void getAddress() throws Exception {
+    this.mockMvc.perform(get("/address/53.89079,27.525773")).
+            andDo(print()).
+            andExpect(status().isOk()).
+            andExpect(content().string(containsString("проспект Дзержинского 5, 220036 Мінск, Беларусь")));
+  }
 }
