@@ -26,19 +26,23 @@ class GeoServiceTest {
     geoService.getAddress("53.93133,27.64601");
   }
 
-  private Optional<String> getAddressFromCache(String position){
-      return ofNullable(cacheManager.getCache("address")).map(c -> c.get(position, String.class));
+  private Optional<String> getAddressFromCache(String position) {
+    return ofNullable(cacheManager.getCache("address")).map(c -> c.get(position, String.class));
   }
 
-  private Optional<String> getPositionFromCache(String address){
-      return ofNullable(cacheManager.getCache("position")).map(c -> c.get(address, String.class));
+  private Optional<String> getPositionFromCache(String address) {
+    return ofNullable(cacheManager.getCache("position")).map(c -> c.get(address, String.class));
   }
 
   @Test
-  void checkIfTheAddressDataIsInTheCache(){
-      Optional<String> address = Optional.ofNullable(geoService.getAddress("53.93133,27.64601"));
-      assertEquals(address, getAddressFromCache("53.93133,27.64601"));
+  void checkIfTheAddressDataIsInTheCache() {
+    Optional<String> address = Optional.ofNullable(geoService.getAddress("53.93133,27.64601"));
+    assertEquals(address, getAddressFromCache("53.93133,27.64601"));
   }
 
-
+  @Test
+  void checkIfThePositionDataIsInTheCache() {
+    Optional<String> position = Optional.ofNullable(geoService.getPosition("гродно"));
+    assertEquals(position, getPositionFromCache("гродно"));
+  }
 }
